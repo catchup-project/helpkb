@@ -268,9 +268,11 @@ class InstallController extends Controller {
 		// checking requested date time format for the admin and system
 		$date_time_format = Date_time_format::where('format','=',$datetime)->first();
 		// dd($date_time_format);
+		/*
 		if($date_time_format->id == null){
 			return ['response'=>'fail','reason'=>'invalid date-time format','status'=>'0'];
 		}
+		*/
 		// Creating minum settings for system
 		$system = new System;
 		$system->status = 1;
