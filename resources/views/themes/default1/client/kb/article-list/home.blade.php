@@ -84,15 +84,6 @@
         @endforeach
         
     </div>
-    <section class="section">
-        <div class="banner-wrapper banner-horizontal clearfix">
-            <h4 class="banner-title h4">{!! Lang::get('lang.need_more_support') !!}?</h4>
-            <div class="banner-content">
-                <p>{!! Lang::get('lang.if_you_did_not_find_an_answer_please_raise_a_ticket_describing_the_issue') !!}.</p>
-            </div>
-            <p><a href="#" class="btn btn-custom">{!! Lang::get('lang.submit_a_ticket') !!}</a></p>
-        </div>
-    </section>
 </div>
 @stop
 

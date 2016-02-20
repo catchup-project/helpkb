@@ -12,7 +12,7 @@
     <div class="site-hero clearfix">
         <ol class="breadcrumb breadcrumb-custom">
             <li class="text">{!! Lang::get('lang.you_are_here') !!}: </li>
-            <li><a href="{!! URL::route('form') !!}">{!! Lang::get('lang.submit_a_ticket') !!}</a></li>
+            <li><a href="#">{!! Lang::get('lang.submit_a_ticket') !!}</a></li>
         </ol>
     </div>
 @stop

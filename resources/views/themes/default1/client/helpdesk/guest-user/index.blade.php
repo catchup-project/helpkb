@@ -35,7 +35,7 @@
         @endif
         @if(App\Model\helpdesk\Settings\System::first()->status == 1)
             <span onclick="javascript: window.location.href='https://support.ebs.in/app/index.php?/Tickets/Submit';">
-                <a href="{!! URL::route('form') !!}" class="widgetrowitem defaultwidget" style="background-image: URL('https://support.ebs.in/app/__swift/themes/client/images/icon_widget_submitticket.png');">
+                <a href="#" class="widgetrowitem defaultwidget" style="background-image: URL('https://support.ebs.in/app/__swift/themes/client/images/icon_widget_submitticket.png');">
                     <span class="widgetitemtitle">{!! Lang::get('lang.submit_a_ticket') !!}</span>
                 </a>
             </span>

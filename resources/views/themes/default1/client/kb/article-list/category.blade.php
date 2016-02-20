@@ -83,7 +83,10 @@ $num = \App\Model\kb\Relationship::where('category_id','=', $category->id)->get(
 $article_id = $num->lists('article_id');
 $numcount = count($article_id);
 ?>
-    <li><a href="{{url('category-list/'.$category->slug)}}"><span class="badge pull-right">{{$numcount}}</span>{{$category->name}}</a></li>
+            @if($numcount > 0)
+                <li><a href="{{url('category-list/'.$category->slug)}}"><span
+                                class="badge pull-right">{{$numcount}}</span>{{$category->name}}</a></li>
+            @endif
     @endforeach
 </ul>
 @stop
