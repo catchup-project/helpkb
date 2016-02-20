@@ -21,7 +21,7 @@ return array(
         |
         */
 
-        'class' => 'table table-bordered',
+        'class' => 'table table-striped table-bordered',
 
         /*
         |--------------------------------------------------------------------------
@@ -51,7 +51,7 @@ return array(
         'options' => array(
 
             "sPaginationType" => "full_numbers",
-
+            "pageLength" => 50,
             "bProcessing" => false
 
         ),

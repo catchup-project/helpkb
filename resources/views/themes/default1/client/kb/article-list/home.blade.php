@@ -90,7 +90,7 @@
             <div class="banner-content">
                 <p>{!! Lang::get('lang.if_you_did_not_find_an_answer_please_raise_a_ticket_describing_the_issue') !!}.</p>
             </div>
-            <p><a href="{!! URL::route('form') !!}" class="btn btn-custom">{!! Lang::get('lang.submit_a_ticket') !!}</a></p>
+            <p><a href="#" class="btn btn-custom">{!! Lang::get('lang.submit_a_ticket') !!}</a></p>
         </div>
     </section>
 </div>

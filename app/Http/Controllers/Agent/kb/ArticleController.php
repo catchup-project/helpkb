@@ -4,7 +4,6 @@
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\Agent\kb\SettingsController;
 use App\Http\Controllers\Client\kb\UserController;
-use App\Http\Controllers\Agent\helpdesk\TicketController;
 
 // Requests
 use App\Http\Requests\kb\ArticleRequest;
@@ -51,11 +50,6 @@ class ArticleController extends Controller {
 		$this->middleware('roles');
 		SettingsController::language();
 	}
-	
-	public function test() {
-		//$table = $this->setDatatable();
-		return view('themes.default1.agent.kb.article.test');
-	}
 
 	/**
 	 * Fetching all the list of articles in a chumper datatable format
@@ -75,7 +69,7 @@ class ArticleController extends Controller {
 			/* add column Created */
 			->addColumn('Created', function ($model) {
 				$t = $model->created_at;
-				return TicketController::usertimezone($t);
+				return ArticleController::usertimezone($t);
 			})
 			/* add column action */
 			->addColumn('Actions', function ($model) {

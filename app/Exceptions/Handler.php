@@ -18,6 +18,7 @@ class Handler extends ExceptionHandler {
 
 	/**
 	 * Create a new controller instance.
+   *
 	 * @return type response
 	 */
 	// public function __construct() {
@@ -46,6 +47,7 @@ class Handler extends ExceptionHandler {
 	 */
 	public function render($request, Exception $e)
 	{
+    /*
 		if(config('app.debug') == false) {
 			if ($this->isHttpException($e) && $e->getStatusCode() == 404) {
 				return response()->view('errors.404', []);
@@ -67,9 +69,9 @@ class Handler extends ExceptionHandler {
         {
             return $this->renderHttpException($e);
         }
+  */
 
-        if (config('app.debug'))
-        {
+    if (config('app.debug')) {
             return $this->renderExceptionWithWhoops($e);
         }
 

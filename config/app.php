@@ -13,7 +13,7 @@ return [
 	|
 	 */
 
-	'debug' => false,
+  'debug' => env('APP_DEBUG', false),
 
 	/*
 	|--------------------------------------------------------------------------
@@ -134,37 +134,6 @@ return [
 	 */
 
 	'providers' => [
-            
-            
-            
-            
-            
-            
-            
-            
-//
-
-			//
-
-			//
-
-			//
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-
 		/*
 		 * Laravel Framework Service Providers...
 		 */
