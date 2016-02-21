@@ -131,9 +131,6 @@
                             </section><!-- /.content -->
                         </div>
                         <footer class="main-footer">
-                            <div class="pull-right hidden-xs">
-                                <b>Version</b> {!! Config::get('app.version') !!}
-                            </div>
                         </footer>
                     </div><!-- ./wrapper -->
                   

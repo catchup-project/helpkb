@@ -55,12 +55,6 @@
                                         <li><a href="{{route('article-list')}}">Articles</a></li>  
                                     </ul>
                                 </li>
-                                </li>
-                                <?php $pages = App\Model\kb\Page::where('status', '1')->where('visibility', '1')->get();
-                                ?>
-                                @foreach($pages as $page)
-                                    <li><a href="{{route('pages',$page->name)}}">{{$page->name}}</a></li>
-                                @endforeach
                                 <li><a href="{{route('contact')}}">Contact us</a></li>
 
                             @if(Auth::user())

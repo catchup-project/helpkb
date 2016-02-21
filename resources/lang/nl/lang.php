@@ -600,7 +600,7 @@ return array(
   'Departments' => 'DEPARTMENTS',
   'tools' => 'Tools',
   'canned' => 'Canned',
-  'knowledge_base' => 'Knowledge Base',
+  'knowledge_base' => 'Veel gestelde vragen',
   'loading' => 'Loading',
 
   /*
@@ -784,15 +784,16 @@ return array(
 
 
   'category' => 'Category',
-  'addcategory' => 'Categorie toevoegen',
-  'allcategory' => 'Alle Categorieën',
+  'tagcloud' => 'Tag Cloud',
+  'addcategory' => 'Module toevoegen',
+  'allcategory' => 'Alle Modules',
   'article' => 'Article',
   'articles' => 'Artikelen',
-  'addarticle' => 'Artikel Toevoegen',
-  'allarticle' => 'Alle Artikelen',
+  'addarticle' => 'Vraag Toevoegen',
+  'allarticle' => 'Alle Vragen',
   'pages' => 'Pagina-s',
   'addpages' => 'Pagina toevoegen',
-  'allpages' => 'Alle Pagina-s',
+  'allpages' => "Alle Pagina's",
   'widgets' => 'Widgets',
   'footer1' => 'Footer 1',
   'footer2' => 'Footer 2',

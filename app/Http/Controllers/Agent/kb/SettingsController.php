@@ -278,7 +278,7 @@ class SettingsController extends Controller {
 	static function language() {
 		// $set = Settings::whereId(1)->first();
 		// $lang = $set->language;
-		Config::set('app.locale', 'en');
+		Config::set('app.locale', 'nl');
 		Config::get('app');
 	}
 

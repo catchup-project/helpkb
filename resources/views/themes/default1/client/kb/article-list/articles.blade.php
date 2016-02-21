@@ -12,7 +12,6 @@
 <div class="site-hero clearfix">
     <ol class="breadcrumb breadcrumb-custom">
         <li class="text">{!! Lang::get('lang.you_are_here')!!}: </li>
-        <li>{!! Lang::get('lang.home') !!}</li>
         <li>{!! Lang::get('lang.knowledge_base') !!}</li>
         <li class="active">{!! Lang::get('lang.article') !!}</li>
     </ol>
@@ -54,12 +53,14 @@
 <ul class="nav nav-pills nav-stacked nav-categories">
 
     @foreach($categorys as $category)
-<?php
-$num = \App\Model\kb\Relationship::where('category_id','=', $category->id)->get();
-$article_id = $num->lists('article_id');
-$numcount = count($article_id);
-?>
-    <li><a href="{{url('category-list/'.$category->slug)}}"><span class="badge pull-right">{{$numcount}}</span>{{$category->name}}</a></li>
+            <?php
+            $num = \App\Model\kb\Relationship::where('category_id','=', $category->id)->get();
+            $article_id = $num->lists('article_id');
+            $numcount = count($article_id);
+            ?>
+        @if($numcount > 0)
+                <li><a href="{{url('category-list/'.$category->slug)}}"><span class="badge pull-right">{{$numcount}}</span>{{$category->name}}</a></li>
+        @endif
     @endforeach
 </ul>
 @stop

@@ -45,35 +45,12 @@
     <header id="masthead" class="site-header" role="banner">
         <div class="container" style="">
             <div id="logo" class="site-logo text-center" style="font-size: 30px;">
-                <?php
-                $company = App\Model\helpdesk\Settings\Company::where('id', '=', '1')->first();
-                $system = App\Model\helpdesk\Settings\System::where('id', '=', '1')->first();
-                ?>
-                @if($system->url)
-                    <a href="{!! $system->url !!}" rel="home">
-                        @else
-                            <a href="{{url('/')}}" rel="home">
-                                @endif
-                                @if($company->use_logo == 1)
-                                    <img src="{{asset('lb-faveo/media/company')}}{{'/'}}{{$company->logo}}"
-                                         alt="User Image" width="200px" height="200px"/>
-                                @else
-                                    @if($system->name)
-                                        {!! $system->name !!}
-                                    @else
-                                        <b>SUPPORT</b> CENTER
-                                    @endif
-                                @endif
-                            </a>
-
+                            <a href="{{url('/')}}" rel="home"><b>Digitaal</b> Kantoor</a>
             </div><!-- #logo -->
             <div id="navbar" class="navbar-wrapper text-center">
                 <nav class="navbar navbar-default site-navigation" role="navigation">
                     <ul class="nav navbar-nav navbar-menu">
                         <li @yield('home')><a href="{{url('/')}}">{!! Lang::get('lang.home') !!}</a></li>
-                        @if($system->first()->status == 1)
-                            <li @yield('submit')><a href="#">{!! Lang::get('lang.submit_a_ticket') !!}</a></li>
-                        @endif
                         <li @yield('kb')><a
                                     href="{!! url('knowledgebase') !!}">{!! Lang::get('lang.knowledge_base') !!}</a>
                             <ul class="dropdown-menu">
@@ -81,56 +58,58 @@
                                 <li><a href="{{route('article-list')}}">{!! Lang::get('lang.articles') !!}</a></li>
                             </ul>
                         </li>
-                        <?php $pages = App\Model\kb\Page::where('status', '1')->where('visibility', '1')->get();
-                        ?>
-                        @foreach($pages as $page)
-                            <li><a href="{{route('pages',$page->slug)}}">{{$page->name}}</a></li>
-                        @endforeach
+
+
+
+
+
+                        {{-- <li @yield('contact')><a href="{{route('contact')}}">Contact us</a></li> --}}
                         @if(Auth::user())
-                            <li @yield('myticket')><a
-                                        href="{{url('mytickets')}}">{!! Lang::get('lang.my_tickets') !!}</a></li>
 
-                            {{-- <li @yield('contact')><a href="{{route('contact')}}">Contact us</a></li> --}}
-                            <li @yield('profile')><a href="#">{!! Lang::get('lang.my_profile') !!}</a>
-                                <ul class="dropdown-menu">
-                                    <li>
-                                        <div class="banner-wrapper user-menu text-center clearfix">
-                                            @if(Auth::user()->profile_pic)
-                                                <img src="{{asset('lb-faveo/media/profilepic')}}{{'/'}}{{Auth::user()->profile_pic}}"
-                                                     class="img-circle" alt="User Image" height="80" width="80"/>
-                                            @else
-                                                <img src="{{ Gravatar::src(Auth::user()->email) }}" class="img-circle"
-                                                     alt="User Image">
-                                            @endif
-                                            <h3 class="banner-title text-info h4">{{Auth::user()->first_name." ".Auth::user()->last_name}}</h3>
 
-                                            <div class="banner-content">
-                                                {{-- <a href="{{url('kb/client-profile')}}" class="btn btn-custom btn-xs">Edit Profile</a> --}}
-                                                <a href="{{url('auth/logout')}}"
-                                                   class="btn btn-custom btn-xs">{!! Lang::get('lang.log_out') !!}</a>
-                                            </div>
-                                            @if(Auth::user())
-                                                @if(Auth::user()->role != 'user')
-                                                    <div class="banner-content">
-                                                        <a href="{{url('dashboard')}}"
-                                                           class="btn btn-custom btn-xs">{!! Lang::get('lang.dashboard') !!}</a>
-                                                    </div>
-                                                @endif
-                                            @endif
-                                            @if(Auth::user())
-                                                @if(Auth::user()->role == 'user')
-                                                    <div class="banner-content">
-                                                        <a href="{{url('client-profile')}}"
-                                                           class="btn btn-custom btn-xs">{!! Lang::get('lang.profile') !!}</a>
-                                                    </div>
-                                                @endif
-                                            @endif
 
-                                        </div>
-                                    </li>
-                                </ul>
-                            </li>
-                    </ul><!-- .navbar-user -->
+                                                <li @yield('profile')><a href="#">{!! Lang::get('lang.my_profile') !!}</a>
+
+
+
+
+                                                    <ul class="dropdown-menu">
+                                                        <li>
+                                                            <div class="banner-wrapper user-menu text-center clearfix">
+
+
+
+
+                                                                <h3 class="banner-title text-info h4">{{Auth::user()->first_name." ".Auth::user()->last_name}}</h3>
+
+
+
+
+
+                                                                <div class="banner-content">
+                                                                    <a href="{{url('auth/logout')}}"
+                                                                       class="btn btn-custom btn-xs">{!! Lang::get('lang.log_out') !!}</a>
+                                                                </div>
+
+
+
+
+                                                                @if(Auth::user())
+                                                                    @if(Auth::user()->role != 'user')
+                                                                        <div class="banner-content">
+                                                                            <a href="{{url('/admin/dashboard')}}"
+                                                                               class="btn btn-custom btn-xs">{!! Lang::get('lang.dashboard') !!}</a>
+                                                                        </div>
+                                                                    @endif
+                                                                @endif
+
+                                                            </div>
+                                                        </li>
+                                                    </ul>
+                                                </li>
+                                        </ul><!-- .navbar-user -->
+
+
                     @else
                         <ul class="nav navbar-nav navbar-login">
                             <li <?php if($errors->first('email') || $errors->first('password')){ ?> class="sfHover" <?php } else { ?> <?php } ?> >
@@ -141,6 +120,10 @@
                                             class="sub-indicator fa fa-chevron-circle-down fa-fw text-muted"></i></a>
                             </li>
                         </ul><!-- .navbar-login -->
+
+
+
+
                         <div id="login-form"
                              <?php if($errors->first('email') || $errors->first('password')){ ?> class="login-form collapse fade clearfix in"
                              <?php } else { ?> class="login-form collapse fade clearfix" <?php  } ?> >
@@ -168,6 +151,12 @@
                             {!! Form::close() !!}
                         </div><!-- #login-form -->
                     @endif
+
+
+
+
+
+
                 </nav><!-- #site-navigation -->
             </div><!-- #navbar -->
 
@@ -219,8 +208,8 @@
                         @yield('content')
                         <div id="sidebar" class="site-sidebar col-md-3">
                             <div class="widget-area">
-                                <section id="section-banner" class="section">
-                                    @yield('check')
+                                <section id="section-tagcloud" class="section">
+                                    @yield('tagcloud')
                                 </section><!-- #section-banner -->
                                 <section id="section-categories" class="section">
                                     @yield('category')
@@ -302,9 +291,8 @@
             <hr/>
             <div class="row">
                 <div class="site-info col-md-6">
-                    <p class="text-muted">{!! Lang::get('lang.copyright') !!} &copy; {!! date('Y') !!} <a
-                                href="{!! $company->website !!}">{!! $company->company_name !!}</a>. {!! Lang::get('lang.all_rights_reserved') !!}
-                        . {!! Lang::get('lang.powered_by') !!} <a href="http://www.faveohelpdesk.com/" target="_blank">Faveo</a>
+                    <p class="text-muted">
+                        <a href="#">Digitaal Kantoor</a>
                     </p>
                 </div>
                 <div class="site-social text-right col-md-6">

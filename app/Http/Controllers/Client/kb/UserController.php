@@ -27,13 +27,6 @@ class UserController extends Controller
 
   public function __construct()
   {
-    //$this->middleware('auth');
-    //SettingsController::language();
-    // $this->port();
-    // $this->host();
-    // $this->password();
-    // $this->encryption();
-    // $this->email();
   }
 
   /**
@@ -43,15 +36,13 @@ class UserController extends Controller
    */
   public function getArticle(Article $article, Category $category, Settings $settings)
   {
-    $settings = $settings->first();
-    $pagination = $settings->pagination;
+    //$settings = $settings->first();
+    $pagination = 25;
     // $article = $article->where('status', '1');
     // $article = $article->where('type', '1');
     $article = $article->paginate($pagination);
-    //dd($article);
     $article->setPath('article-list');
     $categorys = $category->get();
-    // $time = $this->timezone($utc);
     return view('themes.default1.client.kb.article-list.articles', compact('time', 'categorys', 'article'));
   }
 
@@ -80,7 +71,7 @@ class UserController extends Controller
   public function search(SearchRequest $request, Category $category, Article $article, Settings $settings)
   {
     $settings = $settings->first();
-    $pagination = $settings->pagination;
+    $pagination = 25;
     $search = $request->input('s');
     $result = $article->search($search)->paginate($pagination);
     $result->setPath('search');
@@ -96,13 +87,7 @@ class UserController extends Controller
    */
   public function show($slug, Article $article, Category $category)
   {
-    //ArticleController::timezone();
-    //dd($slug);
     $arti = $article->where('slug', $slug)->where('status', '1')->where('type', '1')->first();
-
-    //dd($arti);
-    //$categorys = $category->get();
-    //$avatar->get('vijaycodename47@gmail.com');
     return view('themes.default1.client.kb.article-list.show', compact('arti'));
   }
 
@@ -133,12 +118,6 @@ class UserController extends Controller
     //}
   }
 
-  public function Faq(Faq $faq, Category $category)
-  {
-    $faq = $faq->where('id', '1')->first();
-    $categorys = $category->get();
-    return view('themes.default1.client.kb.article-list.faq', compact('categorys', 'faq'));
-  }
 
   /**
    * get the contact page for user
@@ -179,7 +158,7 @@ class UserController extends Controller
       $message->to($contact->email, $contact->name)->subject('Contact');
     });
     if ($mail) {
-      return redirect('contact')->with('success', 'Your details send to System');
+      return redirect('contact')->with('success', 'Your details sent to System');
     } else {
       return redirect('contact')->with('fails', 'Your details can not send to System');
     }
@@ -190,63 +169,12 @@ class UserController extends Controller
     return view('themes.default1.client.kb.article-list.contact-details');
   }
 
-  /**
-   * To insert the values to the comment table
-   *
-   * @param type Article $article
-   * @param type Request $request
-   * @param type Comment $comment
-   * @param type Id $id
-   * @return type response
-   */
-  public function postComment($slug, Article $article, CommentRequest $request, Comment $comment)
-  {
-    $article = $article->where('slug', $slug)->first();
-    $id = $article->id;
-    $comment->article_id = $id;
-    if ($comment->fill($request->input())->save()) {
-      return Redirect::back()->with('success', 'Your comment posted');
-    } else {
-      return Redirect::back()->with('fails', 'Sorry not processed');
-    }
-  }
 
   public function getPage($name, Page $page)
   {
     $page = $page->where('slug', $name)->first();
     //$this->timezone($page->created_at);
     return view('themes.default1.client.kb.article-list.pages', compact('page'));
-  }
-
-  static function port()
-  {
-    $setting = Settings::whereId('1')->first();
-    Config::set('mail.port', $setting->port);
-  }
-
-  static function host()
-  {
-    $setting = Settings::whereId('1')->first();
-    Config::set('mail.host', $setting->host);
-  }
-
-  static function encryption()
-  {
-    $setting = Settings::whereId('1')->first();
-    Config::set(['mail.encryption' => $setting->encryption, 'mail.username' => $setting->email]);
-  }
-
-  static function email()
-  {
-    $setting = Settings::whereId('1')->first();
-    Config::set(['mail.from' => ['address' => $setting->email, 'name' => 'asd']]);
-    //dd(Config::get('mail'));
-  }
-
-  static function password()
-  {
-    $setting = Settings::whereId('1')->first();
-    Config::set(['mail.password' => $setting->password, 'mail.sendmail' => $setting->email]);
   }
 
   public function getCategoryList(Article $article, Category $category, Relationship $relation)
@@ -258,72 +186,4 @@ class UserController extends Controller
     return view('themes.default1.client.kb.article-list.categoryList', compact('categorys', 'article_id'));
 
   }
-
-  // static function timezone($utc) {
-  // 	$set = Settings::whereId('1')->first();
-  // 	$tz = $set->timezone;
-  // 	$format = $set->dateformat;
-  // 	//$utc = date('M d Y h:i:s A');
-  // 	//echo 'UTC : ' . $utc;
-  // 	date_default_timezone_set($tz);
-
-  // 	$offset = date('Z', strtotime($utc));
-  // 	//print "offset: $offset \n";
-  // 	$date = date($format, strtotime($utc) + $offset);
-  // 	return $date;
-  // 	//return substr($date, 0, -6);
-  // }
-
-  public function clientProfile()
-  {
-    $user = Auth::user();
-    return view('themes.default1.client.kb.article-list.profile', compact('user'));
-  }
-
-  public function postClientProfile($id, ProfileRequest $request)
-  {
-    $user = Auth::user();
-    $user->gender = $request->input('gender');
-    $user->save();
-    if ($user->profile_pic == 'avatar5.png' || $user->profile_pic == 'avatar2.png') {
-      if ($request->input('gender') == 1) {
-        $name = 'avatar5.png';
-        $destinationPath = 'lb-faveo/dist/img';
-        $user->profile_pic = $name;
-      } elseif ($request->input('gender') == 0) {
-        $name = 'avatar2.png';
-        $destinationPath = 'lb-faveo/dist/img';
-        $user->profile_pic = $name;
-      }
-    }
-    if (Input::file('profile_pic')) {
-      //$extension = Input::file('profile_pic')->getClientOriginalExtension();
-      $name = Input::file('profile_pic')->getClientOriginalName();
-      $destinationPath = 'lb-faveo/dist/img';
-      $fileName = rand(0000, 9999) . '.' . $name;
-      //echo $fileName;
-      Input::file('profile_pic')->move($destinationPath, $fileName);
-      $user->profile_pic = $fileName;
-    } else {
-      $user->fill($request->except('profile_pic', 'gender'))->save();
-      return redirect('guest')->with('success', 'Profile Updated sucessfully');
-    }
-    if ($user->fill($request->except('profile_pic'))->save()) {
-      return redirect('guest')->with('success', 'Profile Updated sucessfully');
-    }
-  }
-
-  public function postClientProfilePassword($id, ProfilePassword $request)
-  {
-    $user = Auth::user();
-    //echo $user->password;
-    if (Hash::check($request->input('old_password'), $user->getAuthPassword())) {
-      $user->password = Hash::make($request->input('new_password'));
-      $user->save();
-      return redirect()->back()->with('success', 'Password Updated sucessfully');
-    } else {
-      return redirect()->back()->with('fails', 'Password was not Updated');
-    }
-  }
-
 }

@@ -30,9 +30,7 @@
 <div class="site-hero clearfix">
     
         <ol class="breadcrumb breadcrumb-custom">
-
             <li>{!! Lang::get('lang.you_are_here') !!}: </li>
-            <li>{!! Lang::get('lang.home') !!}</li>
             <li>{!! Lang::get('lang.knowledge_base') !!}</li>
         </ol>
     
@@ -40,9 +38,13 @@
 @stop
 <div id="content" class="site-content col-md-9">
     <div class="row">
-        <?php $categories = App\Model\kb\Category::all();
+        <?php
+        //$categories = App\Model\kb\Category::all();
+        $categories = App\Model\kb\Category::where('status', 1)
+                ->orderBy('parent', 'asc')->orderBy('name', 'asc')
+                ->get();
         ?>
-        @foreach($categorys as $category)
+        @foreach($categories as $category)
         {{-- get the article_id where category_id == current category --}}
         <?php
         $all = App\Model\kb\Relationship::all();
@@ -62,18 +64,12 @@
                 <ul class="fa-ul">
                     <?php foreach ($article_id as $id) {
                     
-                        $article = App\Model\kb\Article::where('id', '=', $id)->where('status', '=','1')->where('type', '=','1')->get();
+                        $article = App\Model\kb\Article::where('id', '=', $id)->where('status', '=','1')->where('type', '=','1')->limit(3)->get();
                         ?>
                         @foreach($article as $arti)
                         <li>
                             <i class="fa-li fa fa-list-alt fa-fw text-muted"></i>
-                            <h3 class="h5"><a href="#"><a href="{{url('show/'.$arti->slug)}}">{{$arti->name}}</a></h3>
-                            <span class="article-meta">{{$arti->created_at->format('l, d-m-Y')}}</span>
-                    <?php $str = $arti->description;
-                        $len = strlen($str);  
-
-                        $excerpt = App\Http\Controllers\Client\kb\UserController::getExcerpt($str, $startPos = 0, $maxLength = 50); ?>
-                            {!! $excerpt !!} <br/><a class="more-link text-center" href="{{url('show/'.$arti->slug)}}" style="color: orange">{!! Lang::get('lang.read_more') !!}</a>
+                            <h3 class="h5"><a href="{{url('show/'.$arti->slug)}}">{{$arti->name}}</a></h3>
                         </li>
                         @endforeach
 <?php } ?>
@@ -96,7 +92,9 @@ $num = \App\Model\kb\Relationship::where('category_id','=', $category->id)->get(
 $article_id = $num->lists('article_id');
 $numcount = count($article_id);
 ?>
+    @if($numcount > 0)
     <li><a href="{{url('category-list/'.$category->slug)}}"><span class="badge pull-right">{{$numcount}}</span>{{$category->name}}</a></li>
+    @endif
     @endforeach
 </ul>
 @stop

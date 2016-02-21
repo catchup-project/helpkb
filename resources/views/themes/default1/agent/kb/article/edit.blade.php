@@ -7,7 +7,7 @@
     class="active"
 @stop
 @section('content')
-{!! Form::model($article,['url' => 'article/'.$article->id , 'method' => 'PATCH'] )!!}
+{!! Form::model($article,['url' => 'admin/article/'.$article->id , 'method' => 'PATCH'] )!!}
 <div class="row">
 		<div class="box-body" >
 		@if(Session::has('success'))

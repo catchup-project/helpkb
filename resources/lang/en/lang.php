@@ -797,7 +797,7 @@ return array(
   'addarticle' => 'Add Article',
   'allarticle' => 'All Article',
   'pages' => 'Pages',
-  'addpages' => 'Add Pages',
+  'addpages' => 'Add Pagez',
   'allpages' => 'All Pages',
   'widgets' => 'Widgets',
   'footer1' => 'Footer 1',
