@@ -8,30 +8,6 @@
         <!-- Bootstrap 3.3.2 -->
         <link href="{{asset("lb-faveo/css/bootstrap.min.css")}}" rel="stylesheet" type="text/css" />
         <!-- Font Awesome Icons -->
-        <style>
-            span.stars, span.stars span {
-    display: block;
-    background: url({!! URL::asset('lb-faveo/dist/images/stars.png'); !!}) 0 -16px repeat-x;
-    width: 80px;
-    height: 16px;
-}
-
-span.stars span {
-    background-position: 0 0;
-}
-        </style>
-        <style>
-            span.stars2, span.stars2 span {
-    display: block;
-    background: url({!! URL::asset('lb-faveo/dist/images/stars.png'); !!}) 0 -16px repeat-x;
-    width: 80px;
-    height: 16px;
-}
-
-span.stars2 span {
-    background-position: 0 0;
-}
-        </style>
         <link href="{{asset("lb-faveo/css/font-awesome.min.css")}}" rel="stylesheet" type="text/css" />
         <!-- Ionicons -->
         <link href="{{asset("lb-faveo/css/ionicons.min.css")}}" rel="stylesheet">
@@ -68,11 +44,6 @@ span.stars2 span {
         <div class="wrapper">
             <header class="main-header">
                 <a href="http://www.faveohelpdesk.com" class="logo"><img src="{{ asset('lb-faveo/media/images/logo.png') }}" width="100px;"></a>
-<?php
-$company = App\Model\helpdesk\Settings\Company::where('id', '=', '1')->first();
-if ($company != null) {
-}
-?>
                 <!-- Header Navbar: style can be found in header.less -->
                 <nav class="navbar navbar-static-top" role="navigation">
                     <!-- Sidebar toggle button-->
@@ -90,33 +61,19 @@ if ($company != null) {
                             <li @yield('Tools')><a data-target="#tabD" href="#">{!! Lang::get('lang.tools') !!}</a></li>
                         </ul>
                         <ul class="nav navbar-nav navbar-right">
-                            @if(Auth::user()->role == 'admin')
-                                <li><a href="{{url('admin')}}">{!! Lang::get('lang.admin_panel') !!}</a></li>
-                            @endif
                             <!-- User Account: style can be found in dropdown.less -->
                             <li class="dropdown user user-menu">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                                 @if(Auth::user())
-                                    @if(Auth::user()->profile_pic)
-                                        <img src="{{asset('lb-faveo/media/profilepic')}}{{'/'}}{{Auth::user()->profile_pic}}"class="user-image" alt="User Image"/>
-                                    @else
-                                        <img src="{{ Gravatar::src(Auth::user()->email) }}" class="user-image" alt="User Image">
-                                    @endif
                                     <span class="hidden-xs">{{Auth::user()->first_name." ".Auth::user()->last_name}}</span>
-                                @endif          
+                                @endif
                                 </a>
                                 <ul class="dropdown-menu">
-                                    <!-- User image -->
-                                    <li class="user-header"  style="background-color:#343F44;">
-                                        @if(Auth::user()->profile_pic)
-                                        <img src="{{asset('lb-faveo/media/profilepic')}}{{'/'}}{{Auth::user()->profile_pic}}" class="img-circle" alt="User Image" />
-                                        @else                                      
-                                            <img src="{{ Gravatar::src(Auth::user()->email) }}" class="img-circle" alt="User Image">
-                                        @endif
-                                        <p>
-                                            {{Auth::user()->first_name." ".Auth::user()->last_name}} - {{Auth::user()->role}}
-                                            <small></small>
-                                        </p>
+                                    <!-- Menu Footer-->
+                                    <li class="user-footer">
+                                        <div class="pull-right">
+                                            <a href="{{ url('/auth/logout') }}" class="btn btn-default btn-flat">Sign out</a>
+                                        </div>
                                     </li>
                                 </ul>
                             </li>
@@ -154,135 +111,16 @@ if ($company != null) {
                                             @endif
                                         </div>
                                     </div>
-                                    <!-- search form -->
-                                    {{-- <form action="#" method="get" class="sidebar-form"> --}}
-                                        {{-- <div class="input-group"> --}}
-                                            {{-- <input type="text" name="q" class="form-control" placeholder="Search..."/> --}}
-                                            {{-- <span class="input-group-btn"> --}}
-                                                {{-- <button type='submit' name='seach' id='search-btn' class="btn btn-flat"><i class="fa fa-search"></i></button> --}}
-                                            {{-- </span> --}}
-                                        {{-- </div> --}}
-                                    {{-- </form> --}}
-                                    <!-- /.search form -->
                                     <!-- sidebar menu: : style can be found in sidebar.less -->
                                     <ul class="sidebar-menu">
                                         @yield('sidebar')
-                                        <li class="header">{!! Lang::get('lang.Tickets') !!}</li>
-<?php
-if(Auth::user()->role == 'admin') {
-$inbox = App\Model\helpdesk\Ticket\Tickets::all();
-$myticket = App\Model\helpdesk\Ticket\Tickets::where('assigned_to', Auth::user()->id)->where('status','1')->get();
-$unassigned = App\Model\helpdesk\Ticket\Tickets::where('assigned_to', '0')->where('status','1')->get();
-$tickets = App\Model\helpdesk\Ticket\Tickets::where('status','1')->get();
-} elseif(Auth::user()->role == 'agent') {
-$inbox = App\Model\helpdesk\Ticket\Tickets::where('dept_id','',Auth::user()->primary_dpt)->get();
-$myticket = App\Model\helpdesk\Ticket\Tickets::where('assigned_to', Auth::user()->id)->where('status','1')->get();
-$unassigned = App\Model\helpdesk\Ticket\Tickets::where('assigned_to', '0')->where('status','1')->where('dept_id','',Auth::user()->primary_dpt)->get();
-$tickets = App\Model\helpdesk\Ticket\Tickets::where('status','1')->get();
-}
-$i = count($tickets);
-?>
-                                        <li @yield('inbox')>
-                                            <a href="{{ url('/ticket/inbox') }}" id="load-inbox">
-                                                <i class="fa fa-envelope"></i> <span>{!! Lang::get('lang.inbox') !!}</span> <small class="label pull-right bg-green"><?php echo $i;?></small>                                            </a>
-                                        </li>
-                                        <li @yield('myticket')>
-                                             <a href="{{url('ticket/myticket')}}">
-                                                <i class="fa fa-user"></i> <span>{!! Lang::get('lang.my_tickets') !!} </span>
-                                                <small class="label pull-right bg-green">{{count($myticket) }}</small>
-                                            </a>
-                                        </li>
-                                        <li @yield('unassigned')>
-                                            <a href="{{url('unassigned')}}">
-                                                <i class="fa fa-th"></i> <span>{!! Lang::get('lang.unassigned') !!}</span>
-                                                <small class="label pull-right bg-green">{{count($unassigned)}}</small>
-                                            </a>
-                                        </li>
-                                        <li @yield('trash')>
-                                            <a href="{{url('trash')}}">
-                                                <i class="fa fa-trash-o"></i> <span>{!! Lang::get('lang.trash') !!}</span>
-                                                <?php $deleted = App\Model\helpdesk\Ticket\Tickets::where('status', '5')->get();?>
-                                                <small class="label pull-right bg-green">{{count($deleted)}}</small>
-                                            </a>
-                                        </li>
-<li class="header">{!! Lang::get('lang.Departments') !!}</li>
-<?php
-$depts = App\Model\helpdesk\Agent\Department::all();
-foreach ($depts as $dept) {
-$open = App\Model\helpdesk\Ticket\Tickets::where('status','=','1')->where('assigned_to','=', 0)->where('dept_id','=',$dept->id)->get();
-$open = count($open);
-$underprocess = App\Model\helpdesk\Ticket\Tickets::where('status','=','1')->where('assigned_to','>', 0)->where('dept_id','=',$dept->id)->get();
-$underprocess = count($underprocess);
-$closed = App\Model\helpdesk\Ticket\Tickets::where('status','=','2')->where('dept_id','=',$dept->id)->get();
-$closed = count($closed);
-    // $underprocess = 0;
-    // foreach ($inbox as $ticket4) {
-    //  if ($ticket4->assigned_to == null) {
-    //  } else {
-    //      $underprocess++;
-    //  }
-    // }
-if (Auth::user()->role == 'admin') { ?>
-                                        <li class="treeview">
-                                            <a href="#">
-                                                <i class="fa fa-folder-open"></i> <span>{!! $dept->name !!}</span> <i class="fa fa-angle-left pull-right"></i>
-                                            </a>
-                                        </li>
-<?php } if (Auth::user()->role == 'agent' && Auth::user()->primary_dpt == $dept->id) { ?>
-                                        <li class="treeview">
-                                            <a href="#">
-                                                <i class="fa fa-folder-open"></i> <span>{!! $dept->name !!}</span> <i class="fa fa-angle-left pull-right"></i>
-                                            </a>
-                                        </li>
-<?php } }  ?>
-                        </ul>
-                        </section>
+                                    </ul>
+                                </section>
                         <!-- /.sidebar -->
                         </aside>
-<?php $agent_group = Auth::user()->assign_group;
-$group = App\Model\helpdesk\Agent\Groups::where('id', '=', $agent_group)->where('group_status', '=', '1')->first();
-// dd($group); ?>
                         <!-- Right side column. Contains the navbar and content of the page -->
                         <div class="content-wrapper">
                             <!-- Content Header (Page header) -->
-                            <div class="tab-content" style="background-color: white;padding: 0 20px 0 20px">
-                                <div class="collapse navbar-collapse" id="navbar-collapse">
-                                    <div class="tabs-content">
-                                        <div class="tabs-pane @yield('dashboard-bar')"  id="tabA">
-                                            <ul class="nav navbar-nav">
-                                                <li id="bar" @yield('dashboard') ><a href="{{url('dashboard')}}">{!! Lang::get('lang.dashboard') !!}</a></li>
-                                                <li id="bar" @yield('profile') ><a href="{{url('profile')}}">{!! Lang::get('lang.profile') !!}</a></li>
-                                            </ul>
-                                        </div>
-                                        <div class="tabs-pane @yield('user-bar')" id="tabB">
-                                            <ul class="nav navbar-nav">
-                                                <li id="bar" @yield('user')><a href="{{ url('user') }}" >{!! Lang::get('lang.user_directory') !!}</a></li></a></li>
-                                                <li id="bar" @yield('organizations')><a href="{{ url('organizations') }}" >{!! Lang::get('lang.organizations') !!}</a></li></a></li>
-                                            </ul>
-                                        </div>
-                                        <div class="tabs-pane @yield('ticket-bar')" id="tabC">
-                                            <ul class="nav navbar-nav">
-                                                <li id="bar" @yield('open')><a href="{{ url('/ticket/open') }}" >{!! Lang::get('lang.open') !!}</a></li>
-                                                <li id="bar" @yield('answered')><a href="{{ url('/ticket/answered') }}" >{!! Lang::get('lang.answered') !!}</a></li>
-                                                <li id="bar" @yield('myticket')><a href="{{ url('/ticket/myticket') }}" >{!! Lang::get('lang.my_tickets') !!}</a></li>
-                                                {{-- <li id="bar" @yield('ticket')><a href="{{ url('ticket') }}" >Ticket</a></li> --}}
-                                                {{-- <li id="bar" @yield('overdue')><a href="{{ url('/ticket/overdue') }}" >Overdue</a></li> --}}
-                                                <li id="bar" @yield('assigned')><a href="{{ url('/ticket/assigned') }}" >{!! Lang::get('lang.assigned') !!}</a></li>
-                                                <li id="bar" @yield('closed')><a href="{{ url('/ticket/closed') }}" >{!! Lang::get('lang.closed') !!}</a></li>
-                                                <?php if ($group->can_create_ticket == 1) {?>
-                                                <li id="bar" @yield('newticket')><a href="{{ url('/newticket') }}" >{!! Lang::get('lang.create_ticket') !!}</a></li>
-                                                <?php } ?>
-                                            </ul>
-                                        </div>
-                                        <div class="tabs-pane @yield('tools-bar')" id="tabD">
-                                            <ul class="nav navbar-nav">
-                                                <li id="bar" @yield('tools')><a href="{{ url('/canned/list') }}" >{!! Lang::get('lang.canned_response') !!}</a></li>
-                                                <li id="bar" @yield('kb')><a href="{{ url('/comment') }}" >{!! Lang::get('lang.knowledge_base') !!}</a></li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
                             <section class="content-header">
                                 @yield('PageHeader')
                                 @yield('breadcrumbs')
@@ -296,7 +134,6 @@ $group = App\Model\helpdesk\Agent\Groups::where('id', '=', $agent_group)->where(
                             <div class="pull-right hidden-xs">
                                 <b>Version</b> {!! Config::get('app.version') !!}
                             </div>
-            <strong>{!! Lang::get('lang.copyright') !!} &copy; {!! date('Y') !!}  <a href="{!! $company->website !!}">{!! $company->company_name !!}</a>.</strong> {!! Lang::get('lang.all_rights_reserved') !!}. {!! Lang::get('lang.powered_by') !!} <a href="http://www.faveohelpdesk.com/">Faveo</a>
                         </footer>
                     </div><!-- ./wrapper -->
                   

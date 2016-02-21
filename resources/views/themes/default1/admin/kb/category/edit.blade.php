@@ -10,7 +10,7 @@
 </script>
 
 @section('content')
-{!! Form::model($category,['url' => 'category/'.$category->slug , 'method' => 'PATCH'] )!!}
+{!! Form::model($category,['url' => '/admin/category/'.$category->slug , 'method' => 'PATCH'] )!!}
 
 
 <div class="box box-primary">

@@ -104,8 +104,8 @@ class UserController extends Controller {
 				return $stat;
 			})
 			->addColumn('lastlogin', function ($model) {
-				$t = $model->updated_at;
-				return TicketController::usertimezone($t);
+				$t = date($model->updated_at);
+				return $t;
 			})
 			->addColumn('Actions', function ($model) {
 				//return '<a href=article/delete/ ' . $model->id . ' class="btn btn-danger btn-flat" onclick="myFunction()">Delete</a>&nbsp;<a href=article/' . $model->id . '/edit class="btn btn-warning btn-flat">Edit</a>&nbsp;<a href=show/' . $model->id . ' class="btn btn-warning btn-flat">View</a>';

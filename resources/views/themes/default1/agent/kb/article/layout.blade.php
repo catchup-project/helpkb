@@ -116,8 +116,8 @@
                                 <i class="fa fa-angle-left pull-right"></i>
                             </a>
                                     <ul class="treeview-menu">
-                                        <li @yield('add-category')><a href="{{url('category/create')}}"><i class="fa fa-circle-o"></i>Add Category</a></li>
-                                         <li @yield('all-category')><a href="{{url('category')}}"><i class="fa fa-circle-o"></i> All Category</a></li>
+                                        <li @yield('add-category')><a href="{{url('category/create')}}"><i class="fa fa-circle-o"></i>Module Toevoegen</a></li>
+                                         <li @yield('all-category')><a href="{{url('category')}}"><i class="fa fa-circle-o"></i> Alle Modules</a></li>
                                      </ul>
                         </li>
                         <li class="treeview @yield('article')">
@@ -126,8 +126,8 @@
                                 <i class="fa fa-angle-left pull-right"></i>
                             </a>
                                     <ul class="treeview-menu">
-                                        <li @yield('add-article')><a href="{{url('article/create')}}"><i class="fa fa-circle-o"></i>Add Article</a></li>
-                                         <li @yield('all-article')><a href="{{url('article')}}"><i class="fa fa-circle-o"></i> All Article</a></li>
+                                        <li @yield('add-article')><a href="{{url('article/create')}}"><i class="fa fa-circle-o"></i>Vraag Toevoegen</a></li>
+                                         <li @yield('all-article')><a href="{{url('article')}}"><i class="fa fa-circle-o"></i> Alle Vragen</a></li>
                                      </ul>
                         </li>
 
@@ -137,38 +137,10 @@
                                 <i class="fa fa-angle-left pull-right"></i>
                             </a>
                                     <ul class="treeview-menu">
-                                        <li @yield('add-pages')><a href="{{url('page/create')}}"><i class="fa fa-circle-o"></i>Add Pages</a></li>
-                                         <li @yield('all-pages')><a href="{{url('page')}}"><i class="fa fa-circle-o"></i> All Pages</a></li>
+                                        <li @yield('add-pages')><a href="{{url('page/create')}}"><i class="fa fa-circle-o"></i>Pagina Toevoegen</a></li>
+                                         <li @yield('all-pages')><a href="{{url('page')}}"><i class="fa fa-circle-o"></i> Alle Pagina's</a></li>
                                      </ul>
                         </li>
-                        <li class="treeview @yield('widget')">
-                            <a href="#">
-                                <i class="fa  fa-th"></i> <span>Widgets</span>
-                                <i class="fa fa-angle-left pull-right"></i>
-                            </a>
-                                    <ul class="treeview-menu">
-                                        <li @yield('footer1')><a href="{{url('create-footer')}}"><i class="fa fa-circle-o"></i>Footer 1</a></li>
-                                         <li @yield('footer2')><a href="{{url('create-footer2')}}"><i class="fa fa-circle-o"></i> Footer 2</a></li>
-                                         <li @yield('footer3')><a href="{{url('create-footer3')}}"><i class="fa fa-circle-o"></i> Footer 3</a></li>
-                                         <li @yield('footer4')><a href="{{url('create-footer4')}}"><i class="fa fa-circle-o"></i> Footer 4</a></li>
-                                         <li @yield('side1')><a href="{{url('side1')}}"><i class="fa fa-circle-o"></i>Side Widget 1</a></li>
-                                         <li @yield('side2')><a href="{{url('side2')}}"><i class="fa fa-circle-o"></i>Side Widget 2</a></li>
-                                         <li @yield('social')><a href="{{url('social')}}"><i class="fa fa-circle-o"></i>Social</a></li>
-                                     </ul>
-                        </li>
-                         <li @yield('comment')>
-                            <a href="{{url('comment')}}">
-                                <i class="fa fa-comments-o"></i>
-                                <span>Comments</span>
-                            </a>
-                        </li>
-                         <li @yield('settings')>
-                            <a href="{{url('settings')}}">
-                                 <i class="fa fa-wrench"></i>
-                                <span>Settings</span>
-                            </a>
-                        </li>
-
                     </ul>
 
                 </section>
@@ -179,15 +151,6 @@
       <div class="content-wrapper">
         <!-- Content Header (Page header) -->
         <!-- Content Header (Page header) -->
-                <div class="tab-content" style="background-color: white; border-top:1px solid #F0F0F0;">
-                    <div class="collapse navbar-collapse" id="navbar-collapse">
-                        <div class="tabs-content">
-
-                        </div>
-                    </div>
-                </div>
-
-
         <!-- Main content -->
         <section class="content">
           <!-- Info boxes -->
@@ -196,11 +159,7 @@
       </div><!-- /.content-wrapper -->
 
       <footer class="main-footer">
-                <div class="pull-right hidden-xs">
-                    <b>Version</b> {{$settings->version}}
-                </div>
-                 <strong>Copyright &copy; {{date("Y")}} <a href="{{$settings->website}}"> {{$settings->company_name}}</a>.  Powered By <a href="http://www.faveohelpdesk.com">Faveo</a>.</strong>
-            </footer>
+      </footer>
 
       <!-- Control Sidebar -->
 

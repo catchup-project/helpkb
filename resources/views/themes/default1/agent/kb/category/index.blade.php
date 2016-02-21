@@ -32,7 +32,8 @@
 <div class="row">
 <div class="col-sm-12">
         {!! Datatable::table()
-            ->addColumn(Lang::get('lang.name'),
+            ->addColumn(Lang::get('lang.parent'),
+                        Lang::get('lang.name'),
                         Lang::get('lang.create'),
                         Lang::get('lang.action'))       // these are the column headings to be shown
             ->setUrl(route('api.category'))   // this is the route where data will be retrieved

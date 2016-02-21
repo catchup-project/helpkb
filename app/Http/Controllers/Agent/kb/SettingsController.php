@@ -163,7 +163,7 @@ class SettingsController extends Controller {
 				}
 			})
 			->addColumn('Created', function ($model) {
-				return TicketController::usertimezone(date($model->created_at));
+				return date($model->created_at);
 			})
 			->addColumn('Actions', function ($model) {
 				return '<a href=comment/delete/' . $model->id . ' class="btn btn-danger btn-xs">'.\Lang::get('lang.delete').'</a>&nbsp;<a href=published/' . $model->id . ' class="btn btn-warning btn-xs">'.\Lang::get('lang.publish').'</a>';

@@ -124,8 +124,8 @@ class UserController extends Controller {
 			})
 			/* column last login date */
 			->addColumn('lastlogin', function ($model) {
-				$t = $model->updated_at;
-				return TicketController::usertimezone($t);
+				$t = date($model->updated_at);
+				return $t;
 			})
 			/* column actions */
 			->addColumn('Actions', function ($model) {

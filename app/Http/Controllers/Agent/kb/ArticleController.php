@@ -73,7 +73,7 @@ class ArticleController extends Controller
       })
       /* add column Created */
       ->addColumn('Created', function ($model) {
-        $t = $model->created_at;
+        $t = date($model->created_at);
         return $t;
       })
       /* add column action */
@@ -276,15 +276,15 @@ class ArticleController extends Controller
    */
   static function usertimezone($utc)
   {
-    $user = Auth::user();
-    $tz = $user->timezone;
-    $set = Settings::whereId('1')->first();
-    $format = $set->dateformat;
-    //$utc = date('M d Y h:i:s A');
+    $set = System::whereId('1')->first();
+    $timezone = Timezones::whereId($set->time_zone)->first();
+    $tz = $timezone->name;
+    $format = $set->date_time_format;
     date_default_timezone_set($tz);
     $offset = date('Z', strtotime($utc));
+    $format = Date_time_format::whereId($format)->first()->format;
     $date = date($format, strtotime($utc) + $offset);
-    echo $date;
+    return $date;
   }
 
 }
